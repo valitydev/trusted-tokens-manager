@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>trusted-tokens-manager</artifactId>
@@ -22,8 +22,8 @@
         <exposed.ports>${server.port} ${management.port}</exposed.ports>
         <dockerfile.base.service.tag>1d57d77a38eb7b351eca3c1a9a3e45ec441ed9aa</dockerfile.base.service.tag>
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
-        <trusted-tokens-proto.version>1.2-d185a1e</trusted-tokens-proto.version>
-        <fraudbusters-proto.version>1.95-e2836da</fraudbusters-proto.version>
+        <trusted-tokens-proto.version>1.7-6d29f86</trusted-tokens-proto.version>
+        <fraudbusters-proto.version>1.102-269908f</fraudbusters-proto.version>
         <machinegun-proto.version>1.19-f77367a</machinegun-proto.version>
         <testcontainers.version>1.15.3</testcontainers.version>
     </properties>
@@ -47,7 +47,7 @@
             <artifactId>shared-resources</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>trusted-tokens-proto</artifactId>
             <version>${trusted-tokens-proto.version}</version>
         </dependency>
@@ -61,7 +61,7 @@
             <version>${machinegun-proto.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>fraudbusters-proto</artifactId>
             <version>${fraudbusters-proto.version}</version>
         </dependency>
@@ -129,8 +129,24 @@
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>testcontainers-annotations</artifactId>
-            <version>1.3.0</version>
+            <version>1.3.1</version>
             <scope>test</scope>
+            <!--            TODO remove after update testcontainers-annotations-->
+            <exclusions>
+                <exclusion>
+                    <groupId>com.rbkmoney</groupId>
+                    <artifactId>payout-manager-proto</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.rbkmoney</groupId>
+                    <artifactId>fraudbusters-proto</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.rbkmoney</groupId>
+            <artifactId>payout-manager-proto</artifactId>
+            <version>1.21-bdd9888</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
