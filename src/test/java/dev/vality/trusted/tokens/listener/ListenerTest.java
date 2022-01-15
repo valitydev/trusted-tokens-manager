@@ -1,8 +1,8 @@
 package dev.vality.trusted.tokens.listener;
 
-import com.rbkmoney.testcontainers.annotations.KafkaSpringBootTest;
-import com.rbkmoney.testcontainers.annotations.kafka.KafkaTestcontainer;
-import com.rbkmoney.testcontainers.annotations.kafka.config.KafkaProducer;
+import dev.vality.testcontainers.annotations.KafkaSpringBootTest;
+import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainer;
+import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
 import dev.vality.damsel.fraudbusters.Payment;
 import dev.vality.damsel.fraudbusters.PaymentStatus;
 import dev.vality.damsel.fraudbusters.Withdrawal;

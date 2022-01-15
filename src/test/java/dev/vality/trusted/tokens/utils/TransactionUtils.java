@@ -1,6 +1,6 @@
 package dev.vality.trusted.tokens.utils;
 
-import com.rbkmoney.testcontainers.annotations.util.ValuesGenerator;
+import dev.vality.testcontainers.annotations.util.ValuesGenerator;
 import dev.vality.damsel.domain.BankCard;
 import dev.vality.damsel.domain.Cash;
 import dev.vality.damsel.domain.CurrencyRef;

@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: valitydev/action-jdk-build
-          ref: v1.0.17
+          ref: v1.0.18
           path: .github/actions/action-jdk-build
 
       - name: Run Build Java
