@@ -5,7 +5,7 @@
     <root level="info">
         <appender-ref ref="CONSOLE"/>
     </root>
-    <logger name="com.rbkmoney.trusted.tokens">
+    <logger name="dev.vality.trusted.tokens">
         <level value="info"/>
     </logger>
     <logger name="org.apache.kafka">
