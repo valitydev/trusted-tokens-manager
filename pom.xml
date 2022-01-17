@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.vality</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>trusted-tokens-manager</artifactId>
@@ -24,12 +24,14 @@
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
         <trusted-tokens-proto.version>1.7-6d29f86</trusted-tokens-proto.version>
         <fraudbusters-proto.version>1.102-269908f</fraudbusters-proto.version>
-        <machinegun-proto.version>1.19-f77367a</machinegun-proto.version>
-        <testcontainers.version>1.15.3</testcontainers.version>
+        <machinegun-proto.version>1.21-e4784ab</machinegun-proto.version>
+        <payout-manager-proto.version>1.23-5bf4fad</payout-manager-proto.version>
+        <testcontainers-annotations.version>1.3.2</testcontainers-annotations.version>
+        <woody.version>1.0.0</woody.version>
     </properties>
 
     <dependencies>
-        <!--rbkmoney-->
+        <!--rbkmoney && ValityDev-->
         <dependency>
             <groupId>com.rbkmoney</groupId>
             <artifactId>custom-metrics-spring-boot-starter</artifactId>
@@ -39,8 +41,9 @@
             <artifactId>custom-actuator-endpoints</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney.woody</groupId>
+            <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
+            <version>${woody.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rbkmoney</groupId>
@@ -56,7 +59,7 @@
             <artifactId>kafka-common-lib</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>machinegun-proto</artifactId>
             <version>${machinegun-proto.version}</version>
         </dependency>
@@ -129,31 +132,13 @@
         <dependency>
             <groupId>dev.vality</groupId>
             <artifactId>testcontainers-annotations</artifactId>
-            <version>1.3.2</version>
+            <version>${testcontainers-annotations.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.rbkmoney</groupId>
+            <groupId>dev.vality</groupId>
             <artifactId>payout-manager-proto</artifactId>
-            <version>1.21-bdd9888</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>kafka</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
+            <version>${payout-manager-proto.version}</version>
         </dependency>
     </dependencies>
 

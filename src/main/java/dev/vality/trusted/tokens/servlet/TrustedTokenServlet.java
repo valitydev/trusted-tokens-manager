@@ -1,6 +1,6 @@
 package dev.vality.trusted.tokens.servlet;
 
-import com.rbkmoney.woody.thrift.impl.http.THServiceBuilder;
+import dev.vality.woody.thrift.impl.http.THServiceBuilder;
 import dev.vality.trusted.tokens.TrustedTokensSrv;
 import org.springframework.beans.factory.annotation.Autowired;
 

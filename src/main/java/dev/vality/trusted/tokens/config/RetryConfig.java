@@ -1,6 +1,6 @@
 package dev.vality.trusted.tokens.config;
 
-import com.rbkmoney.woody.api.flow.error.WUnavailableResultException;
+import dev.vality.woody.api.flow.error.WUnavailableResultException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
