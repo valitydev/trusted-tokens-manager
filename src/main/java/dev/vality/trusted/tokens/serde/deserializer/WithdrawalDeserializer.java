@@ -1,8 +1,8 @@
 package dev.vality.trusted.tokens.serde.deserializer;
 
 
-import com.rbkmoney.kafka.common.serialization.AbstractThriftDeserializer;
 import dev.vality.damsel.fraudbusters.Withdrawal;
+import dev.vality.kafka.common.serialization.AbstractThriftDeserializer;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

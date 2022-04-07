@@ -1,7 +1,7 @@
 package dev.vality.trusted.tokens.serde;
 
-import com.rbkmoney.kafka.common.serialization.ThriftSerializer;
 import dev.vality.damsel.fraudbusters.Payment;
+import dev.vality.kafka.common.serialization.ThriftSerializer;
 import dev.vality.trusted.tokens.serde.deserializer.PaymentDeserializer;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
