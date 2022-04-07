@@ -1,7 +1,7 @@
 package dev.vality.trusted.tokens.listener;
 
-import com.rbkmoney.kafka.common.util.LogUtil;
 import dev.vality.damsel.fraudbusters.Withdrawal;
+import dev.vality.kafka.common.util.LogUtil;
 import dev.vality.trusted.tokens.exception.TransactionSavingException;
 import dev.vality.trusted.tokens.service.WithdrawalService;
 import lombok.RequiredArgsConstructor;
