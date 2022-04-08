@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RiakConfig {
 
-    @Value("${riak.port}")
+    @Value("${riak-config.port}")
     public int riakPort;
 
-    @Value("${riak.address}")
+    @Value("${riak-config.address}")
     public String riakAddress;
 
     @Bean
