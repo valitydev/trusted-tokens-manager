@@ -35,7 +35,7 @@ info:
   version: '@project.version@'
   stage: dev
 
-riak:
+riak-config:
   address: localhost
   port: 8087
   bucket:

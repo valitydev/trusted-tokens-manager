@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ConditionTemplateRepository extends AbstractRepository {
 
     private final ObjectMapper objectMapper;
-    @Value("${riak.bucket.template}")
+    @Value("${riak-config.bucket.template}")
     private String bucket;
 
     public ConditionTemplateRepository(RiakClient client, ObjectMapper objectMapper) {

@@ -15,7 +15,7 @@ public class CardTokenRepository extends AbstractRepository {
 
     private final ObjectMapper objectMapper;
 
-    @Value("${riak.bucket.token}")
+    @Value("${riak-config.bucket.token}")
     private String bucket;
 
     public CardTokenRepository(ObjectMapper objectMapper, RiakClient client) {
