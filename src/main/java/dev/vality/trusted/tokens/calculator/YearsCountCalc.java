@@ -6,19 +6,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class YearsCountCalc {
 
     public static int getCountYears(Map<Integer, CardTokenData.YearsData> years, Integer yearsOffset) {
+        if (yearsOffset == 0) {
+            return years.get(LocalDateTime.now().getYear()).getYearCount();
+        }
         Integer lastYearToCalc = LocalDateTime.now().getYear() - yearsOffset;
         CardTokenData.YearsData yearsData = years.get(lastYearToCalc);
-        if (yearsData == null) {
-            return 0;
-        }
-        return yearsOffset == 0
-                ? years.get(LocalDateTime.now().getYear()).getYearCount()
-                : calculateFullYearsCount(years, lastYearToCalc) + calculateMonthsCount(yearsData.getMonths());
+        return calculateFullYearsCount(years, lastYearToCalc) + calculateMonthsCount(yearsData);
     }
 
     private static int calculateFullYearsCount(Map<Integer, CardTokenData.YearsData> years, Integer lastYearToCalc) {
@@ -28,9 +27,13 @@ public class YearsCountCalc {
                 .sum();
     }
 
-    private static int calculateMonthsCount(Map<Integer, CardTokenData.MonthsData> months) {
+    private static int calculateMonthsCount(CardTokenData.YearsData lastYearData) {
+        if (Objects.isNull(lastYearData)) {
+            return 0;
+        }
+        Map<Integer, CardTokenData.MonthsData> monthsData = lastYearData.getMonths();
         Integer currentMonth = LocalDateTime.now().getMonthValue();
-        return months.entrySet().stream()
+        return monthsData.entrySet().stream()
                 .filter(month -> month.getKey() > currentMonth)
                 .mapToInt(month -> month.getValue().getMonthCount())
                 .sum();
