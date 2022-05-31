@@ -19,10 +19,12 @@ public class YearsSumCalcTest {
         long monthSum = 200L;
         int monthCount = 2;
         int monthNumber = LocalDateTime.now().getMonthValue();
-        CardTokenData.YearsData yearsDataForCurrentYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
+        CardTokenData.YearsData yearsDataForCurrentYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForCurrentYear);
 
-        assertEquals(monthSum * monthNumber, YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
+        assertEquals(monthSum * monthNumber,
+                YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
     }
 
 
@@ -32,10 +34,12 @@ public class YearsSumCalcTest {
         long monthSum = 200L;
         int monthCount = 2;
         int monthNumber = LocalDateTime.now().getMonthValue();
-        CardTokenData.YearsData yearsDataForCurrentYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
+        CardTokenData.YearsData yearsDataForCurrentYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForCurrentYear);
 
-        assertEquals(monthSum * monthNumber, YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_last_years.getValue()));
+        assertEquals(monthSum * monthNumber,
+                YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_last_years.getValue()));
     }
 
     @Test
@@ -44,10 +48,12 @@ public class YearsSumCalcTest {
         long monthSum = 200L;
         int monthCount = 2;
         int monthNumber = LocalDateTime.now().getMonthValue();
-        CardTokenData.YearsData yearsDataForCurrentYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
+        CardTokenData.YearsData yearsDataForCurrentYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForCurrentYear);
 
-        assertEquals(monthSum * monthNumber, YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_year.getValue()));
+        assertEquals(monthSum * monthNumber,
+                YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_year.getValue()));
     }
 
     @Test
@@ -56,15 +62,19 @@ public class YearsSumCalcTest {
         long monthSum = 200L;
         int monthCount = 2;
         int monthNumber = LocalDateTime.now().getMonthValue();
-        CardTokenData.YearsData yearsDataForCurrentYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
-        CardTokenData.YearsData yearsDataForPreviousYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
-        CardTokenData.YearsData yearsDataForSecondPreviousYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
+        CardTokenData.YearsData yearsDataForCurrentYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
+        CardTokenData.YearsData yearsDataForPreviousYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
+        CardTokenData.YearsData yearsDataForSecondPreviousYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForCurrentYear);
         yearsDataMap.put(LocalDateTime.now().getYear() - 1, yearsDataForPreviousYear);
         yearsDataMap.put(LocalDateTime.now().getYear() - 2, yearsDataForSecondPreviousYear);
 
         long expectedSum = (monthSum * monthNumber) + (monthSum * 12) + (monthSum * (12 - monthNumber));
-        assertEquals(expectedSum, YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
+        assertEquals(expectedSum,
+                YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
     }
 
     @Test
@@ -73,12 +83,15 @@ public class YearsSumCalcTest {
         long monthSum = 200L;
         int monthCount = 2;
         int monthNumber = LocalDateTime.now().getMonthValue();
-        CardTokenData.YearsData yearsDataForCurrentYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
-        CardTokenData.YearsData yearsDataForPreviousYear = CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
+        CardTokenData.YearsData yearsDataForCurrentYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, monthNumber);
+        CardTokenData.YearsData yearsDataForPreviousYear =
+                CardTokenDataUtils.getYearsData(monthSum, monthCount, 12);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForCurrentYear);
         yearsDataMap.put(LocalDateTime.now().getYear(), yearsDataForPreviousYear);
 
         long expectedSum = (monthSum * monthNumber) + (monthSum * (12 - monthNumber));
-        assertEquals(expectedSum, YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
+        assertEquals(expectedSum,
+                YearsSumCalc.getSumYears(yearsDataMap, YearsOffset.current_with_two_last_years.getValue()));
     }
 }

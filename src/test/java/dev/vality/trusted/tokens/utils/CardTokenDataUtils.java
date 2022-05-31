@@ -58,7 +58,9 @@ public abstract class CardTokenDataUtils {
         return yearsData;
     }
 
-    private static Map<Integer, CardTokenData.MonthsData> getMonthsDataMap(long monthSum, int monthCount, int monthNumber) {
+    private static Map<Integer, CardTokenData.MonthsData> getMonthsDataMap(long monthSum,
+                                                                           int monthCount,
+                                                                           int monthNumber) {
         Map<Integer, CardTokenData.MonthsData> monthsDataMap = new HashMap<>();
         for (int i = 1; i <= monthNumber; i++) {
             CardTokenData.MonthsData monthsData = getMonthsData(monthSum, monthCount);
