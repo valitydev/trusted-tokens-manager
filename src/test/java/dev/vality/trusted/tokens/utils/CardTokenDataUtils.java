@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardTokenDataUtils {
+public abstract class CardTokenDataUtils {
 
     public static CardTokenData createCardTokenData() {
         CardTokenData cardTokenData = new CardTokenData();
@@ -47,6 +47,31 @@ public class CardTokenDataUtils {
         currencyDataMap.put("EUR", currencyData);
         currencyDataMap.put("USD", currencyData);
         return currencyDataMap;
+    }
+
+    public static CardTokenData.YearsData getYearsData(long monthSum, int monthCount, int monthNumber) {
+        CardTokenData.YearsData yearsData = new CardTokenData.YearsData();
+        Map<Integer, CardTokenData.MonthsData> monthsDataMap = getMonthsDataMap(monthSum, monthCount, monthNumber);
+        yearsData.setMonths(monthsDataMap);
+        yearsData.setYearCount(monthCount * monthNumber);
+        yearsData.setYearSum(monthSum * monthNumber);
+        return yearsData;
+    }
+
+    private static Map<Integer, CardTokenData.MonthsData> getMonthsDataMap(long monthSum, int monthCount, int monthNumber) {
+        Map<Integer, CardTokenData.MonthsData> monthsDataMap = new HashMap<>();
+        for (int i = 1; i <= monthNumber; i++) {
+            CardTokenData.MonthsData monthsData = getMonthsData(monthSum, monthCount);
+            monthsDataMap.put(i, monthsData);
+        }
+        return monthsDataMap;
+    }
+
+    private static CardTokenData.MonthsData getMonthsData(long monthSum, int monthCount) {
+        CardTokenData.MonthsData monthsData = new CardTokenData.MonthsData();
+        monthsData.setMonthSum(monthSum);
+        monthsData.setMonthCount(monthCount);
+        return monthsData;
     }
 
 }
