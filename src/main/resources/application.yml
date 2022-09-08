@@ -32,16 +32,7 @@ spring:
     ansi:
       enabled: always
   kafka:
-    bootstrap-servers: kenny-kafka1.bst1.vality.net:9092
-    client-id: trusted-tokens-manager
-    consumer:
-      group-id: trusted-tokens-group-1
-      enable-auto-commit: false
-      auto-offset-reset: earliest
-      properties:
-        max.poll.interval.ms: 60000
-        max.session.timeout.ms: 60000
-        throttling.timeout.ms: 1000
+    bootstrap-servers: kenny-kafka1.bst1.rbkmoney.net:909
 
 info:
   version: '@project.version@'
@@ -55,6 +46,7 @@ riak-config:
     template: template
 
 kafka:
+  client-id: trusted-tokens-manager
   num-stream-threads: 7
   stream:
     retries-attempts: 300
@@ -62,6 +54,11 @@ kafka:
     default-api-timeout-ms: 300000
     clean-timeout-sec: 20
     fixed-rate-timeout-ms: 60000
+  consumer:
+    group-id: trusted-tokens-group-1
+    max-poll-interval-ms: 60000
+    max-session-timeout-ms: 60000
+    throttling-timeout-ms: 1000
   topics:
     payment:
       id: payment_event

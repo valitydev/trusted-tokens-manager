@@ -23,7 +23,7 @@ public class KafkaStreamsConfig {
     public static final String WITHDRAWAL_SUFFIX = "-withdrawal";
     private static final String APP_ID = "trusted-tokens";
 
-    @Value("${spring.kafka.client-id}")
+    @Value("${kafka.client-id}")
     private String clientId;
 
     @Value("${kafka.num-stream-threads}")

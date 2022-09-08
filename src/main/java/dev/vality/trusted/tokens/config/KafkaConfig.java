@@ -5,10 +5,7 @@ import dev.vality.damsel.fraudbusters.Withdrawal;
 import dev.vality.trusted.tokens.serde.deserializer.PaymentDeserializer;
 import dev.vality.trusted.tokens.serde.deserializer.WithdrawalDeserializer;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.config.SslConfigs;
-import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +17,6 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.SeekToCurrentBatchErrorHandler;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,8 +26,20 @@ import static org.apache.kafka.clients.consumer.OffsetResetStrategy.EARLIEST;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    @Value("${spring.kafka.client-id}")
+    @Value("${kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
+    @Value("${kafka.client-id}")
     private String clientId;
+
+    @Value("${kafka.consumer.group-id}")
+    private String groupId;
+
+    @Value("${kafka.consumer.max-poll-interval-ms}")
+    private int maxPollInterval;
+
+    @Value("${kafka.consumer.max-session-timeout-ms}")
+    private int maxSessionTimeout;
 
     @Value("${kafka.topics.payment.consume.max-poll-records}")
     private String paymentMaxPollRecords;
@@ -90,10 +98,20 @@ public class KafkaConfig {
             Deserializer<T> deserializer,
             String clientId,
             String maxPollRecords) {
-        Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
+        Map<String, Object> properties = defaultProperties();
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(ConsumerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
         return new DefaultKafkaConsumerFactory<>(properties, new StringDeserializer(), deserializer);
+    }
+
+    private Map<String, Object> defaultProperties() {
+        Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, EARLIEST.name().toLowerCase());
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+        properties.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, maxPollInterval);
+        properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, maxSessionTimeout);
+        return properties;
     }
 
 }
