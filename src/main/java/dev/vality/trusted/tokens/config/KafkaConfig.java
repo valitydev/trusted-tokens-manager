@@ -30,17 +30,8 @@ import static org.apache.kafka.clients.consumer.OffsetResetStrategy.EARLIEST;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    @Value("${kafka.client-id}")
+    @Value("${spring.kafka.client-id}")
     private String clientId;
-
-    @Value("${kafka.consumer.group-id}")
-    private String groupId;
-
-    @Value("${kafka.consumer.max-poll-interval-ms}")
-    private int maxPollInterval;
-
-    @Value("${kafka.consumer.max-session-timeout-ms}")
-    private int maxSessionTimeout;
 
     @Value("${kafka.topics.payment.consume.max-poll-records}")
     private String paymentMaxPollRecords;
@@ -100,7 +91,6 @@ public class KafkaConfig {
             String clientId,
             String maxPollRecords) {
         Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(ConsumerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
         return new DefaultKafkaConsumerFactory<>(properties, new StringDeserializer(), deserializer);
