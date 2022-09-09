@@ -32,7 +32,7 @@ spring:
     ansi:
       enabled: always
   kafka:
-    bootstrap-servers: kenny-kafka1.bst1.vality.net:909
+    bootstrap-servers: kenny-kafka1.bst1.rbkmoney.net:9092
     client-id: trusted-tokens-manager
     streams:
       properties:
