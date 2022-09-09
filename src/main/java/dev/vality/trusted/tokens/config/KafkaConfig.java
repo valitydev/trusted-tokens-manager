@@ -29,12 +29,6 @@ public class KafkaConfig {
     @Value("${spring.kafka.client-id}")
     private String clientId;
 
-    @Value("${spring.kafka.consumer.properties.max.poll.interval.ms}")
-    private int maxPollInterval;
-
-    @Value("${spring.kafka.consumer.properties.max.session.timeout.ms}")
-    private int maxSessionTimeout;
-
     @Value("${kafka.topics.payment.consume.max-poll-records}")
     private String paymentMaxPollRecords;
 
@@ -92,19 +86,10 @@ public class KafkaConfig {
             Deserializer<T> deserializer,
             String clientId,
             String maxPollRecords) {
-        Map<String, Object> properties = defaultProperties();
+        Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
         properties.put(ConsumerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
         return new DefaultKafkaConsumerFactory<>(properties, new StringDeserializer(), deserializer);
-    }
-
-    private Map<String, Object> defaultProperties() {
-        Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
-        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, EARLIEST.name().toLowerCase());
-        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-        properties.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, maxPollInterval);
-        properties.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, maxSessionTimeout);
-        return properties;
     }
 
 }

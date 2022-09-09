@@ -36,9 +36,11 @@ spring:
     client-id: trusted-tokens-manager
     consumer:
       group-id: trusted-tokens-group-1
+      enable-auto-commit: false
+      auto-offset-reset: earliest
       properties:
         max.poll.interval.ms: 60000
-        max.session.timeout.ms: 60000
+        session.timeout.ms: 60000
         throttling.timeout.ms: 1000
 
 info:
