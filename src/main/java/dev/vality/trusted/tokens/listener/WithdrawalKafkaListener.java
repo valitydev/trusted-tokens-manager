@@ -22,7 +22,7 @@ public class WithdrawalKafkaListener {
 
     private final WithdrawalService withdrawalService;
 
-    @Value("${spring.kafka.consumer.properties.throttling.timeout-ms}")
+    @Value("${spring.kafka.consumer.properties.throttling.timeout.ms}")
     private int throttlingTimeout;
 
     @KafkaListener(
