@@ -26,18 +26,6 @@ public class KafkaStreamsConfig {
     @Value("${spring.kafka.client-id}")
     private String clientId;
 
-    @Value("${kafka.num-stream-threads}")
-    private int numStreamThreads;
-
-    @Value("${kafka.stream.retries-attempts}")
-    private int retriesAttempts;
-
-    @Value("${kafka.stream.retries-backoff-ms}")
-    private int retriesBackoffMs;
-
-    @Value("${kafka.stream.default-api-timeout-ms}")
-    private int defaultApiTimeoutMs;
-
     private final KafkaProperties kafkaProperties;
 
     @Bean
@@ -69,11 +57,7 @@ public class KafkaStreamsConfig {
     private void addDefaultStreamsProperties(Map<String, Object> props) {
         props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 10 * 1000);
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
-        props.put(StreamsConfig.NUM_STREAM_THREADS_CONFIG, numStreamThreads);
-        props.put(StreamsConfig.RETRIES_CONFIG, retriesAttempts);
-        props.put(StreamsConfig.RETRY_BACKOFF_MS_CONFIG, retriesBackoffMs);
         props.put(StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
                 LogAndFailExceptionHandler.class);
-        props.put(ConsumerConfig.DEFAULT_API_TIMEOUT_MS_CONFIG, defaultApiTimeoutMs);
     }
 }

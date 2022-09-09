@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class EventStreamsPool {
 
-    @Value("${kafka.stream.clean-timeout-sec}")
+    @Value("${spring.kafka.streams.properties.clean.timeout.sec}")
     private Long cleanTimeoutSec;
 
     private final Map<StreamType, KafkaStreams> kafkaStreamsList = new ConcurrentHashMap<>();
