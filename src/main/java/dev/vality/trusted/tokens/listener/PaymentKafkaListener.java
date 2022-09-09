@@ -22,7 +22,7 @@ public class PaymentKafkaListener {
 
     private final PaymentService paymentService;
 
-    @Value("${kafka.consumer.throttling-timeout-ms}")
+    @Value("${spring.kafka.consumer.properties.throttling.timeout.ms}")
     private int throttlingTimeout;
 
     @KafkaListener(

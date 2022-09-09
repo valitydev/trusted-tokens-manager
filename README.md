@@ -52,4 +52,4 @@ ConditionTemplateRequest, содержащий название шаблона �
 ![handler-trusted-tokens.svg](doc/handler-trusted-tokens.svg)
 
 
-Протокол взаимодействия описан [тут](https://github.com/rbkmoney/trusted-tokens-proto).
+Протокол взаимодействия описан [тут](https://github.com/valitydev/trusted-tokens-proto).

@@ -22,7 +22,7 @@ public class KafkaStreamsStartupInitializer {
     private final List<EventFactory> eventFactories;
     private final EventStreamsPool eventStreamsPool;
 
-    @Value("${kafka.stream.clean-timeout-sec}")
+    @Value("${spring.kafka.streams.properties.clean.timeout.sec}")
     private Long cleanTimeoutSec;
 
     @EventListener(value = ContextRefreshedEvent.class)
