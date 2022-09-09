@@ -26,7 +26,7 @@
         <fraudbusters-proto.version>1.108-0800fde</fraudbusters-proto.version>
         <machinegun-proto.version>1.21-e4784ab</machinegun-proto.version>
         <payout-manager-proto.version>1.35-dbed280</payout-manager-proto.version>
-        <testcontainers-annotations.version>1.4.0</testcontainers-annotations.version>
+        <testcontainers-annotations.version>1.4.3</testcontainers-annotations.version>
         <woody.version>1.0.0</woody.version>
     </properties>
 
