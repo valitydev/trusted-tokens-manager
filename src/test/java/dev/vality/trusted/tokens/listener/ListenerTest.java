@@ -48,6 +48,9 @@ public class ListenerTest {
     @MockitoBean
     private TokenDao tokenDao;
 
+    public static final int TIMEOUT = 10000;
+
+
     @Test
     void listenExistedCapturedPayment() {
         Payment payment = createPayment().setStatus(PaymentStatus.captured);
@@ -58,7 +61,7 @@ public class ListenerTest {
 
         testThriftKafkaProducer.send(paymentTopicName, payment);
 
-        verify(tokenDao, timeout(10000).times(1)).get(token);
+        verify(tokenDao, timeout(TIMEOUT).times(1)).get(token);
         verifyNoMoreInteractions(tokenDao);
 
     }
@@ -72,7 +75,7 @@ public class ListenerTest {
 
         testThriftKafkaProducer.send(paymentTopicName, payment);
 
-        verify(tokenDao, timeout(10000).times(2)).create(any());
+        verify(tokenDao, timeout(TIMEOUT).times(2)).create(any());
 
     }
 
@@ -81,7 +84,7 @@ public class ListenerTest {
         testThriftKafkaProducer.send(paymentTopicName, createPayment().setStatus(PaymentStatus.captured));
         testThriftKafkaProducer.send(paymentTopicName, createPayment().setStatus(PaymentStatus.processed));
 
-        verify(tokenDao, timeout(10000).times(1)).create(any());
+        verify(tokenDao, timeout(TIMEOUT).times(1)).create(any());
     }
 
     @Test
@@ -94,7 +97,7 @@ public class ListenerTest {
 
         testThriftKafkaProducer.send(withdrawalTopicName, withdrawal);
 
-        verify(tokenDao, timeout(10000).times(1)).get(token);
+        verify(tokenDao, timeout(TIMEOUT).times(1)).get(token);
         verifyNoMoreInteractions(tokenDao);
     }
 
@@ -107,7 +110,7 @@ public class ListenerTest {
 
         testThriftKafkaProducer.send(withdrawalTopicName, withdrawal);
 
-        verify(tokenDao, timeout(10000).times(2)).create(any());
+        verify(tokenDao, timeout(TIMEOUT).times(2)).create(any());
 
     }
 
@@ -116,6 +119,6 @@ public class ListenerTest {
         testThriftKafkaProducer.send(withdrawalTopicName, createWithdrawal().setStatus(WithdrawalStatus.succeeded));
         testThriftKafkaProducer.send(withdrawalTopicName, createWithdrawal().setStatus(WithdrawalStatus.pending));
 
-        verify(tokenDao, timeout(10000).times(1)).create(any());
+        verify(tokenDao, timeout(TIMEOUT).times(1)).create(any());
     }
 }
