@@ -29,7 +29,7 @@
         <db.url>jdbc:postgresql://localhost:${db.port}/${db.name}</db.url>
         <trusted-tokens-proto.version>1.7-6d29f86</trusted-tokens-proto.version>
         <fraudbusters-proto.version>1.112-e9d16e0</fraudbusters-proto.version>
-        <testcontainers-annotations.version>3.0.0</testcontainers-annotations.version>
+        <testcontainers-annotations.version>3.0.2</testcontainers-annotations.version>
     </properties>
 
     <dependencies>
