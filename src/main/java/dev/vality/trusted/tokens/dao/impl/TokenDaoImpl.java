@@ -46,9 +46,9 @@ public class TokenDaoImpl extends AbstractGenericDao implements TokenDao {
         SelectConditionStep<TokenDataRecord> where = getDslContext()
                 .selectFrom(TOKEN_DATA)
                 .where(TOKEN_DATA.TOKEN.eq(key));
-        var data = fetchOne(where, listRecordRowMapper).getValue();
+        var data = fetchOne(where, listRecordRowMapper);
         return data != null
-                ? objectMapper.readValue(data, CardTokenData.class)
+                ? objectMapper.readValue(data.getValue(), CardTokenData.class)
                 : null;
     }
 

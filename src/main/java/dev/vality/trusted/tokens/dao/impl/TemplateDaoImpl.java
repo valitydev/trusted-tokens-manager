@@ -46,9 +46,9 @@ public class TemplateDaoImpl extends AbstractGenericDao implements TemplateDao {
         SelectConditionStep<TemplateDataRecord> where = getDslContext()
                 .selectFrom(TEMPLATE_DATA)
                 .where(TEMPLATE_DATA.TEMPLATE_NAME.eq(key));
-        var data = fetchOne(where, listRecordRowMapper).getValue();
+        var data = fetchOne(where, listRecordRowMapper);
         return data != null
-                ? objectMapper.readValue(data, ConditionTemplate.class)
+                ? objectMapper.readValue(data.getValue(), ConditionTemplate.class)
                 : null;
     }
 
