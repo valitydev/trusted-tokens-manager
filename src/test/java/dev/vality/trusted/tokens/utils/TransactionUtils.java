@@ -2,8 +2,8 @@ package dev.vality.trusted.tokens.utils;
 
 import dev.vality.damsel.domain.*;
 import dev.vality.damsel.fraudbusters.ClientInfo;
-import dev.vality.testcontainers.annotations.util.ValuesGenerator;
 import dev.vality.damsel.fraudbusters.*;
+import dev.vality.testcontainers.annotations.util.ValuesGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

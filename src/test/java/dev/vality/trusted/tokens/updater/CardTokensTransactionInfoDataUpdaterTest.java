@@ -1,6 +1,5 @@
 package dev.vality.trusted.tokens.updater;
 
-import dev.vality.trusted.tokens.config.MockedStartupInitializers;
 import dev.vality.trusted.tokens.converter.TransactionToCardTokensTransactionInfoConverter;
 import dev.vality.trusted.tokens.model.CardTokenData;
 import dev.vality.trusted.tokens.model.CardTokensTransactionInfo;
@@ -8,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
-@Import(MockedStartupInitializers.class)
+@ContextConfiguration(classes = {
+        CardTokenDataUpdater.class, TransactionToCardTokensTransactionInfoConverter.class,
+        YearsDataUpdater.class, MonthsDataUpdater.class
+})
 class CardTokensTransactionInfoDataUpdaterTest {
 
     private final int currentYear = LocalDateTime.now().getYear();

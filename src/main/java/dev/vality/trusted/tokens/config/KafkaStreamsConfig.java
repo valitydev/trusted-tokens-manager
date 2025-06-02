@@ -3,12 +3,12 @@ package dev.vality.trusted.tokens.config;
 import dev.vality.trusted.tokens.serde.PaymentSerde;
 import dev.vality.trusted.tokens.serde.WithdrawalSerde;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.errors.LogAndFailExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,8 +29,8 @@ public class KafkaStreamsConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public Properties paymentEventStreamProperties() {
-        final Map<String, Object> props = kafkaProperties.buildStreamsProperties();
+    public Properties paymentEventStreamProperties(SslBundles sslBundles) {
+        final Map<String, Object> props = kafkaProperties.buildStreamsProperties(sslBundles);
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, APP_ID + PAYMENT_SUFFIX);
         props.put(StreamsConfig.CLIENT_ID_CONFIG, clientId + PAYMENT_SUFFIX);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -42,8 +42,8 @@ public class KafkaStreamsConfig {
     }
 
     @Bean
-    public Properties withdrawalEventStreamProperties() {
-        final Map<String, Object> props = kafkaProperties.buildStreamsProperties();
+    public Properties withdrawalEventStreamProperties(SslBundles sslBundles) {
+        final Map<String, Object> props = kafkaProperties.buildStreamsProperties(sslBundles);
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, APP_ID + WITHDRAWAL_SUFFIX);
         props.put(StreamsConfig.CLIENT_ID_CONFIG, clientId + WITHDRAWAL_SUFFIX);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());

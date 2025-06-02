@@ -1,23 +1,23 @@
 package dev.vality.trusted.tokens.listener;
 
-import dev.vality.testcontainers.annotations.KafkaSpringBootTest;
-import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainer;
-import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
 import dev.vality.damsel.fraudbusters.Payment;
 import dev.vality.damsel.fraudbusters.PaymentStatus;
 import dev.vality.damsel.fraudbusters.Withdrawal;
 import dev.vality.damsel.fraudbusters.WithdrawalStatus;
-import dev.vality.trusted.tokens.config.MockedStartupInitializers;
+import dev.vality.testcontainers.annotations.kafka.KafkaTestcontainer;
+import dev.vality.testcontainers.annotations.kafka.config.KafkaProducer;
+import dev.vality.testcontainers.annotations.kafka.config.KafkaProducerConfig;
+import dev.vality.testcontainers.annotations.postgresql.PostgresqlTestcontainer;
+import dev.vality.trusted.tokens.dao.TokenDao;
 import dev.vality.trusted.tokens.model.CardTokenData;
-import dev.vality.trusted.tokens.repository.CardTokenRepository;
 import dev.vality.trusted.tokens.utils.CardTokenDataUtils;
 import org.apache.thrift.TBase;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static dev.vality.trusted.tokens.utils.TransactionUtils.createPayment;
 import static dev.vality.trusted.tokens.utils.TransactionUtils.createWithdrawal;
@@ -34,8 +34,9 @@ import static org.mockito.Mockito.*;
                 "kafka.topics.withdrawal.id",
                 "kafka.topics.payment.dest",
                 "kafka.topics.withdrawal.dest"})
-@KafkaSpringBootTest
-@Import(MockedStartupInitializers.class)
+@PostgresqlTestcontainer
+@SpringBootTest
+@ContextConfiguration(classes = {KafkaProducerConfig.class})
 public class ListenerTest {
 
     @Value("${kafka.topics.payment.id}")
@@ -44,13 +45,8 @@ public class ListenerTest {
     private String withdrawalTopicName;
     @Autowired
     private KafkaProducer<TBase<?, ?>> testThriftKafkaProducer;
-    @MockBean
-    private CardTokenRepository cardTokenRepository;
-
-    @BeforeEach
-    void setUp() {
-        reset(cardTokenRepository);
-    }
+    @MockitoBean
+    private TokenDao tokenDao;
 
     @Test
     void listenExistedCapturedPayment() {
@@ -58,12 +54,12 @@ public class ListenerTest {
         String token = payment.getPaymentTool().getBankCard().getToken();
         CardTokenData cardTokenData = CardTokenDataUtils.createCardTokenData();
         cardTokenData.setLastPaymentId(payment.getId());
-        when(cardTokenRepository.get(token)).thenReturn(cardTokenData);
+        when(tokenDao.get(token)).thenReturn(cardTokenData);
 
         testThriftKafkaProducer.send(paymentTopicName, payment);
 
-        verify(cardTokenRepository, timeout(5000).times(1)).get(token);
-        verifyNoMoreInteractions(cardTokenRepository);
+        verify(tokenDao, timeout(5000).times(1)).get(token);
+        verifyNoMoreInteractions(tokenDao);
 
     }
 
@@ -72,11 +68,11 @@ public class ListenerTest {
         Payment payment = createPayment().setStatus(PaymentStatus.captured);
         String token = payment.getPaymentTool().getBankCard().getToken();
         CardTokenData cardTokenData = CardTokenDataUtils.createCardTokenData();
-        when(cardTokenRepository.get(token)).thenReturn(cardTokenData);
+        when(tokenDao.get(token)).thenReturn(cardTokenData);
 
         testThriftKafkaProducer.send(paymentTopicName, payment);
 
-        verify(cardTokenRepository, timeout(5000).times(2)).create(any());
+        verify(tokenDao, timeout(5000).times(2)).create(any());
 
     }
 
@@ -85,7 +81,7 @@ public class ListenerTest {
         testThriftKafkaProducer.send(paymentTopicName, createPayment().setStatus(PaymentStatus.captured));
         testThriftKafkaProducer.send(paymentTopicName, createPayment().setStatus(PaymentStatus.processed));
 
-        verify(cardTokenRepository, timeout(5000).times(1)).create(any());
+        verify(tokenDao, timeout(5000).times(1)).create(any());
     }
 
     @Test
@@ -94,12 +90,12 @@ public class ListenerTest {
         String token = withdrawal.getDestinationResource().getBankCard().getToken();
         CardTokenData cardTokenData = CardTokenDataUtils.createCardTokenData();
         cardTokenData.setLastWithdrawalId(withdrawal.getId());
-        when(cardTokenRepository.get(token)).thenReturn(cardTokenData);
+        when(tokenDao.get(token)).thenReturn(cardTokenData);
 
         testThriftKafkaProducer.send(withdrawalTopicName, withdrawal);
 
-        verify(cardTokenRepository, timeout(5000).times(1)).get(token);
-        verifyNoMoreInteractions(cardTokenRepository);
+        verify(tokenDao, timeout(5000).times(1)).get(token);
+        verifyNoMoreInteractions(tokenDao);
     }
 
     @Test
@@ -107,11 +103,11 @@ public class ListenerTest {
         Withdrawal withdrawal = createWithdrawal().setStatus(WithdrawalStatus.succeeded);
         String token = withdrawal.getDestinationResource().getBankCard().getToken();
         CardTokenData cardTokenData = CardTokenDataUtils.createCardTokenData();
-        when(cardTokenRepository.get(token)).thenReturn(cardTokenData);
+        when(tokenDao.get(token)).thenReturn(cardTokenData);
 
         testThriftKafkaProducer.send(withdrawalTopicName, withdrawal);
 
-        verify(cardTokenRepository, timeout(5000).times(2)).create(any());
+        verify(tokenDao, timeout(5000).times(2)).create(any());
 
     }
 
@@ -120,6 +116,6 @@ public class ListenerTest {
         testThriftKafkaProducer.send(withdrawalTopicName, createWithdrawal().setStatus(WithdrawalStatus.succeeded));
         testThriftKafkaProducer.send(withdrawalTopicName, createWithdrawal().setStatus(WithdrawalStatus.pending));
 
-        verify(cardTokenRepository, timeout(5000).times(1)).create(any());
+        verify(tokenDao, timeout(5000).times(1)).create(any());
     }
 }

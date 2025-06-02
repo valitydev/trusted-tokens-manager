@@ -15,12 +15,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.listener.SeekToCurrentBatchErrorHandler;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import static org.apache.kafka.clients.consumer.OffsetResetStrategy.EARLIEST;
 
 @Configuration
 @RequiredArgsConstructor
@@ -77,7 +74,7 @@ public class KafkaConfig {
                 clientId,
                 maxPollRecords);
         containerFactory.setConsumerFactory(consumerFactory);
-        containerFactory.setBatchErrorHandler(new SeekToCurrentBatchErrorHandler());
+        containerFactory.setCommonErrorHandler(new DefaultErrorHandler());
         containerFactory.setBatchListener(true);
         containerFactory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
     }

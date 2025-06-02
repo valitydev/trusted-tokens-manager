@@ -10,17 +10,17 @@ import java.util.Map;
 @Data
 public class CardTokenData {
 
-    public String lastPaymentId;
-    public String lastWithdrawalId;
-    public Map<String, CurrencyData> payments;
-    public Map<String, CurrencyData> withdrawals;
+    private String lastPaymentId;
+    private String lastWithdrawalId;
+    private Map<String, CurrencyData> payments;
+    private Map<String, CurrencyData> withdrawals;
 
     @Data
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CurrencyData {
-        public Map<Integer, YearsData> years;
+        private Map<Integer, YearsData> years;
     }
 
     @Data
@@ -28,9 +28,9 @@ public class CardTokenData {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class YearsData {
-        public long yearSum;
-        public int yearCount;
-        public Map<Integer, MonthsData> months;
+        private long yearSum;
+        private int yearCount;
+        private Map<Integer, MonthsData> months;
     }
 
     @Data
@@ -38,8 +38,8 @@ public class CardTokenData {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class MonthsData {
-        public long monthSum;
-        public int monthCount;
+        private long monthSum;
+        private int monthCount;
     }
 
 }

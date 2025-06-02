@@ -1,10 +1,10 @@
 package dev.vality.trusted.tokens.service.impl;
 
 import dev.vality.trusted.tokens.converter.RowConverter;
+import dev.vality.trusted.tokens.dao.TokenDao;
 import dev.vality.trusted.tokens.model.CardTokenData;
 import dev.vality.trusted.tokens.model.CardTokensTransactionInfo;
 import dev.vality.trusted.tokens.model.Row;
-import dev.vality.trusted.tokens.repository.CardTokenRepository;
 import dev.vality.trusted.tokens.service.CardTokenService;
 import dev.vality.trusted.tokens.updater.CardTokenDataUpdater;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +20,17 @@ public class CardTokenServiceImpl implements CardTokenService {
 
     private final CardTokenDataUpdater cardTokenDataUpdater;
     private final RowConverter rowConverter;
-    private final CardTokenRepository repository;
+    private final TokenDao tokendao;
 
     @Override
     public void save(CardTokenData cardTokenData, String token) {
         Row row = rowConverter.convert(token, cardTokenData);
-        repository.create(row);
+        tokendao.create(row);
     }
 
     @Override
     public CardTokenData get(String token) {
-        return Optional.ofNullable(repository.get(token))
+        return Optional.ofNullable(tokendao.get(token))
                 .orElse(new CardTokenData());
     }
 
