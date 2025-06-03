@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS tt;
+CREATE SCHEMA IF NOT EXISTS ttm;
 
-CREATE TABLE tt.token_data
+CREATE TABLE ttm.token_data
 (
     id    BIGSERIAL PRIMARY KEY,
     token CHARACTER VARYING NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE tt.token_data
     CONSTRAINT token_data_ukey UNIQUE (token)
 );
 
-CREATE TABLE tt.template_data
+CREATE TABLE ttm.template_data
 (
     id                 BIGSERIAL PRIMARY KEY,
     template_name      CHARACTER VARYING NOT NULL,
