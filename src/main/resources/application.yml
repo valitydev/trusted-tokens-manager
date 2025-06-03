@@ -55,7 +55,7 @@ spring:
       maximum-pool-size: 30
   flyway:
     table: schema_version
-    schemas: trusted_tokens
+    schemas: tt
 
 info:
   version: '@project.version@'
