@@ -48,7 +48,7 @@ public class ListenerTest {
     @MockitoBean
     private TokenDao tokenDao;
 
-    public static final int TIMEOUT = 10000;
+    private static final int TIMEOUT = 10000;
 
 
     @Test

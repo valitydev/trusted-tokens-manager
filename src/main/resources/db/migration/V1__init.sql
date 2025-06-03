@@ -1,5 +1,3 @@
-CREATE
-EXTENSION IF NOT EXISTS pgcrypto;
 CREATE SCHEMA IF NOT EXISTS trusted_tokens;
 
 CREATE TABLE trusted_tokens.token_data

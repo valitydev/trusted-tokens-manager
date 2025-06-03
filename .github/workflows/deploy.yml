@@ -5,14 +5,16 @@ on:
     branches:
       - 'master'
       - 'main'
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+      - 'epic/**'
 
 jobs:
   deploy:
-    uses: valitydev/java-workflow/.github/workflows/maven-service-deploy.yml@v3
+    uses: empayre/java-workflow/.github/workflows/maven-service-deploy.yml@v3
     secrets:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+      action-fetch-token: ${{ secrets.ACTIONS_FETCH_TOKEN }}
       mm-webhook-url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+      github-pkg-ro-pat: ${{ secrets.GH_PACKAGES_RO_PAT2 }}
+      github-pkg-ro-user: 'empayre-bot'
+      aws-ecr-access_key: ${{ secrets.ECR_ACCESS_KEY }}
+      aws-ecr-secret-key: ${{ secrets.ECR_SECRET_KEYS }}
+      aws-region: ${{ secrets.AWS_REGION }}
