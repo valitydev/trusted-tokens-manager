@@ -23,7 +23,7 @@
         <dockerfile.registry>${env.REGISTRY}</dockerfile.registry>
         <db.user>postgres</db.user>
         <db.password>postgres</db.password>
-        <db.schema>trusted_tokens</db.schema>
+        <db.schema>tt</db.schema>
         <db.port>5432</db.port>
         <db.name>trusted_tokens</db.name>
         <db.url>jdbc:postgresql://localhost:${db.port}/${db.name}</db.url>
