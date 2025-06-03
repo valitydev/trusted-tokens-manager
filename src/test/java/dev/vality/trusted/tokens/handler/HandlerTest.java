@@ -1,17 +1,23 @@
 package dev.vality.trusted.tokens.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.vality.trusted.tokens.ConditionTemplateNotFound;
 import dev.vality.trusted.tokens.InvalidRequest;
-import dev.vality.trusted.tokens.config.MockedStartupInitializers;
-import dev.vality.trusted.tokens.repository.CardTokenRepository;
-import dev.vality.trusted.tokens.repository.ConditionTemplateRepository;
+import dev.vality.trusted.tokens.calculator.ConditionTrustedResolver;
+import dev.vality.trusted.tokens.converter.RowConverter;
+import dev.vality.trusted.tokens.dao.TemplateDao;
+import dev.vality.trusted.tokens.dao.TokenDao;
+import dev.vality.trusted.tokens.service.TemplateService;
+import dev.vality.trusted.tokens.validator.ConditionTemplateValidator;
+import dev.vality.trusted.tokens.validator.conditions.PaymentsConditionsValidator;
+import dev.vality.trusted.tokens.validator.conditions.WithdrawalConditionsValidator;
 import org.apache.thrift.TException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static dev.vality.trusted.tokens.utils.CardTokenDataUtils.createCardTokenData;
 import static dev.vality.trusted.tokens.utils.ConditionTemplateRequestUtils.*;
@@ -20,35 +26,39 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@Import(MockedStartupInitializers.class)
+@ContextConfiguration(classes = {
+        TrustedTokensHandler.class, TemplateService.class, RowConverter.class, ObjectMapper.class,
+        ConditionTemplateValidator.class, PaymentsConditionsValidator.class, WithdrawalConditionsValidator.class,
+        ConditionTrustedResolver.class
+})
 public class HandlerTest {
 
     private static final String TOKEN = "token";
 
-    @MockBean
-    private ConditionTemplateRepository conditionTemplateRepository;
+    @MockitoBean
+    private TemplateDao templateDao;
 
-    @MockBean
-    private CardTokenRepository cardTokenRepository;
+    @MockitoBean
+    private TokenDao tokenDao;
 
     @Autowired
     private TrustedTokensHandler trustedTokensHandler;
 
     @BeforeEach
     public void init() {
-        when(cardTokenRepository.get(TOKEN))
+        when(tokenDao.get(TOKEN))
                 .thenReturn(createCardTokenData());
-        when(conditionTemplateRepository.get("TemplateNotTrustedPayment"))
+        when(templateDao.get("TemplateNotTrustedPayment"))
                 .thenReturn(createTemplateNotTrusted(PAYMENT));
-        when(conditionTemplateRepository.get("TemplateTrustedPayment"))
+        when(templateDao.get("TemplateTrustedPayment"))
                 .thenReturn(createTemplateTrusted(PAYMENT));
-        when(conditionTemplateRepository.get("TemplateTrustedWithSeveralCurrencyPayment"))
+        when(templateDao.get("TemplateTrustedWithSeveralCurrencyPayment"))
                 .thenReturn(createTemplateTrustedWithSeveralCurrency(PAYMENT));
-        when(conditionTemplateRepository.get("TemplateNotTrustedWithdrawal"))
+        when(templateDao.get("TemplateNotTrustedWithdrawal"))
                 .thenReturn(createTemplateNotTrusted(WITHDRAWAL));
-        when(conditionTemplateRepository.get("TemplateTrustedWithdrawal"))
+        when(templateDao.get("TemplateTrustedWithdrawal"))
                 .thenReturn(createTemplateTrusted(WITHDRAWAL));
-        when(conditionTemplateRepository.get("TemplateTrustedWithSeveralCurrencyWithdrawal"))
+        when(templateDao.get("TemplateTrustedWithSeveralCurrencyWithdrawal"))
                 .thenReturn(createTemplateTrustedWithSeveralCurrency(WITHDRAWAL));
     }
 

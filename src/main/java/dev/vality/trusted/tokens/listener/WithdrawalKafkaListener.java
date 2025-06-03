@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class WithdrawalKafkaListener {
                     batch.size(), toSummaryWithdrawalString(batch));
         } catch (TransactionSavingException ex) {
             log.error("Error when WithdrawalKafkaListener listen ex,", ex);
-            ack.nack(ex.getTrxIndex(), throttlingTimeout);
+            ack.nack(ex.getTrxIndex(), Duration.ofMillis(throttlingTimeout));
             throw ex;
         }
     }

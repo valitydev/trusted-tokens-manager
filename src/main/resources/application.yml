@@ -1,18 +1,9 @@
 server:
-  port: '@server.port@'
+  port: ${server.port}
 
 management:
-  security:
-    flag: false
   server:
-    port: '@management.port@'
-  metrics:
-    export:
-      statsd:
-        flavor: etsy
-        enabled: false
-      prometheus:
-        enabled: false
+    port: ${management.port}
   endpoint:
     health:
       show-details: always
@@ -24,6 +15,10 @@ management:
     web:
       exposure:
         include: health,info,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 spring:
   application:
@@ -49,17 +44,22 @@ spring:
         max.poll.interval.ms: 60000
         session.timeout.ms: 60000
         throttling.timeout.ms: 1000
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: ${db.url}
+    username: ${db.user}
+    password: ${db.password}
+    hikari:
+      idle-timeout: 30000
+      maximum-pool-size: 30
+  flyway:
+    table: schema_version
+    schemas: ttm
 
 info:
   version: '@project.version@'
   stage: dev
-
-riak-config:
-  address: localhost
-  port: 8087
-  bucket:
-    token: token
-    template: template
 
 kafka:
   topics:
@@ -87,5 +87,7 @@ trusted.tokens:
   keep-card-tokens-data-years: 3
 
 testcontainers:
+  postgresql:
+    tag: "17"
   kafka:
     tag: '6.2.0'
