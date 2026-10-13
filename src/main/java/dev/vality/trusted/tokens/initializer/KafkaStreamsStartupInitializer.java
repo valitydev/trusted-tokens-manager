@@ -39,6 +39,6 @@ public class KafkaStreamsStartupInitializer {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> kafkaStreams.close(Duration.ofSeconds(cleanTimeoutSec))));
         eventStreamsPool.put(eventFactory.getType(), kafkaStreams);
         log.info("KafkaStreamsStartupInitializer start {} stream kafkaStreams: {}", eventFactory.getType().name(),
-                kafkaStreams.localThreadsMetadata());
+                kafkaStreams.metadataForLocalThreads());
     }
 }

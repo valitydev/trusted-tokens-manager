@@ -1,6 +1,6 @@
 package dev.vality.trusted.tokens.dao.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import dev.vality.dao.impl.AbstractGenericDao;
 import dev.vality.mapper.RecordRowMapper;
 import dev.vality.trusted.tokens.dao.TokenDao;
@@ -23,9 +23,9 @@ import static dev.vality.trusted.tokens.domain.tables.TokenData.TOKEN_DATA;
 public class TokenDaoImpl extends AbstractGenericDao implements TokenDao {
 
     private final RowMapper<Row> listRecordRowMapper;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
 
-    public TokenDaoImpl(DataSource dataSource, ObjectMapper objectMapper) {
+    public TokenDaoImpl(DataSource dataSource, JsonMapper objectMapper) {
         super(dataSource);
         this.objectMapper = objectMapper;
         listRecordRowMapper = new RecordRowMapper<>(TOKEN_DATA, Row.class);

@@ -53,3 +53,17 @@ ConditionTemplateRequest, содержащий название шаблона �
 
 
 Протокол взаимодействия описан [тут](https://github.com/valitydev/trusted-tokens-proto).
+
+## Runtime and build
+
+Requires JDK 25. The service uses `service-parent-pom` 4.0.1 (Spring Boot 4.1.0).
+Run `mvn clean verify`; integration tests require Docker for PostgreSQL and Apache Kafka.
+The build starts embedded PostgreSQL for migrations and jOOQ generation; use
+`-Ddb.port=55433` (or another free port) if port 5432 is occupied.
+
+Tracing is supplied by the OpenTelemetry Java agent in the shared Docker runtime.
+Configure it using `OTEL_JAVAAGENT_ENABLED`, `OTEL_SERVICE_NAME` and
+`OTEL_EXPORTER_OTLP_TRACES_ENDPOINT`. Set `OTEL_METRICS_EXPORTER=none` and
+`OTEL_LOGS_EXPORTER=none` to keep metrics and logging on the existing service paths.
+Production deployment must configure PostgreSQL and Kafka endpoints and enable
+payment/withdrawal consumers as needed; they are disabled in the default configuration.
