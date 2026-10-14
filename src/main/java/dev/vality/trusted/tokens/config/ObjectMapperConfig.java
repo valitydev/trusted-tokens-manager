@@ -15,7 +15,6 @@ public class ObjectMapperConfig {
     @Primary
     public JsonMapper objectMapper() {
         return JsonMapper.builder()
-                .configureForJackson2()
                 .changeDefaultVisibility(visibility -> visibility
                         .withVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
                         .withVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY))

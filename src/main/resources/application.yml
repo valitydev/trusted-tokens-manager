@@ -91,5 +91,3 @@ testcontainers:
     tag: "17"
   kafka:
     tag: '6.2.0'
-
-spring.jackson.use-jackson2-defaults: true
