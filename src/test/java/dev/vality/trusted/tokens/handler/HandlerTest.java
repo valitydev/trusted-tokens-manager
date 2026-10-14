@@ -1,6 +1,6 @@
 package dev.vality.trusted.tokens.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.vality.trusted.tokens.config.ObjectMapperConfig;
 import dev.vality.trusted.tokens.ConditionTemplateNotFound;
 import dev.vality.trusted.tokens.InvalidRequest;
 import dev.vality.trusted.tokens.calculator.ConditionTrustedResolver;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
-        TrustedTokensHandler.class, TemplateService.class, RowConverter.class, ObjectMapper.class,
+        TrustedTokensHandler.class, TemplateService.class, RowConverter.class, ObjectMapperConfig.class,
         ConditionTemplateValidator.class, PaymentsConditionsValidator.class, WithdrawalConditionsValidator.class,
         ConditionTrustedResolver.class
 })

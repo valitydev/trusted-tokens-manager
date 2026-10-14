@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    uses: valitydev/java-workflow/.github/workflows/maven-service-deploy.yml@v3
+    uses: valitydev/java-workflow/.github/workflows/maven-service-deploy.yml@v4
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
       mm-webhook-url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}

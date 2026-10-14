@@ -1,7 +1,7 @@
 package dev.vality.trusted.tokens.converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 import dev.vality.trusted.tokens.model.Row;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RowConverter {
 
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
 
     public Row convert(String key, Object value) {
         try {
@@ -19,7 +19,7 @@ public class RowConverter {
             row.setKey(key);
             row.setValue(objectMapper.writeValueAsString(value));
             return row;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
